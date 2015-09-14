@@ -1,0 +1,770 @@
+/**
+ * Disable selection
+ **/
+body {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/**
+ * Livereload overlay
+ **/
+#__bs_notify__{
+    padding: 0 !important;
+    opacity:0.5 !important;
+    font-size:10px !important;
+    left:30% !important;
+    right:inherit !important;
+}
+
+.statusbar-overlay {
+    background:#586875;
+    /*background-image: linear-gradient(#586875, #576774);*/
+    background:url("../img/BG_window.svg");
+}
+
+.navbar {
+    background:url("../img/BG_window.svg");
+    background-position: center -20px;
+    color: white;
+    font-family: Avenir;
+
+}
+
+
+
+.navbar:after {
+    background:none;
+}
+
+.smart-select-page .navbar {
+    display: none;
+}
+
+.smart-select-page ul {
+    background: none;
+}
+
+label.label-radio input[type=radio]:checked~.item-inner {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2013%2010'%3E%3Cpolygon%20fill%3D'%23FFFFFF'%20points%3D'11.6%2C0%204.4%2C7.2%201.4%2C4.2%200%2C5.6%204.4%2C10%204.4%2C10%204.4%2C10%2013%2C1.4%20'%2F%3E%3C%2Fsvg%3E");
+}
+
+.page-content {
+    margin-top: 44px;
+}
+
+body, .page, .page-content {
+    background-color: #ededed;
+    /*background-image: linear-gradient(#516A7C, #2A3239);*/
+    background-image: url("../img/BG_window.svg");
+    background-position: center -44px;
+    background-size: cover;
+    color:white;
+}
+
+
+
+img.preloader{
+    position: absolute;
+    top:-100px;
+    left:-100px;
+    width:1px;
+    height: 1px;
+}
+
+
+.loading-overlay {
+    position: absolute;
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    background:url("../img/app/three-dots.svg") no-repeat center, linear-gradient(#252525, #191919);
+    z-index: 999999;
+    opacity: 1.0;
+    transition-property: opacity, top;
+    transition-duration: 0.7s;
+}
+
+.calibration {
+    width:100%;
+    height: 60px;
+    background:url("../img/app/three-dots.svg") center no-repeat;
+}
+
+/**
+ * Fonts definition
+ **/
+@font-face {
+    font-family: "Avenir";
+    src:url("../img/fonts/Avenir-Medium.ttf");
+}
+
+@font-face {
+    font-family: "DS-DIGI";
+    src:url("../img/fonts/DS-DIGI.TTF");
+}
+
+/**
+ * Icons definition
+ **/
+.icon {
+    width:25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-results {
+    background-image: url("../img/icon-results-off.svg");
+    width:20px;
+    height: 21px;
+}
+
+
+.active-state > .icon-results{
+    background-image: url("../img/icon-results-on.svg");
+}
+
+.icon-settings {
+    background-image: url("../img/icon-settings-off.svg");
+    width:25px;
+    height: 25px;
+}
+
+.active-state > .icon-settings{
+    background-image: url("../img/icon-settings-on.svg");
+}
+
+.icon-back {
+    width:25px !important;
+    height: 25px !important;
+}
+
+.icon-back, .icon-back-custom {
+    background-image: url("../img/icon-back.svg") !important;
+    background-size: contain !important;
+}
+
+.icon-delete {
+    background-image: url("../img/icon-delete-nobg.svg");
+}
+
+.icon-warning {
+    background:url("../img/icon-warning.png") no-repeat;
+    background-size: 100%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-bottom: -3px;
+}
+
+.gps-warning {
+    display: none;
+    color: rgba(255, 255, 255, 0.7);
+    width:142px;
+}
+
+.ipad .gps-warning {
+    width:auto;
+}
+
+.disabled .gps-warning {
+    pointer-events: all;
+    display: inline-block;
+}
+
+.page-index-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 80%;
+}
+
+.app-title{
+    font-family: Avenir;
+    color:white;
+    font-size:25px;
+    text-align: center;
+}
+
+.logo-start-screen {
+    height: 200px;
+    width:100%;
+    background: url("../img/logo-start-screen.svg") center no-repeat;
+    background-size: contain;
+}
+
+.text-push-to-start {
+    font-family: Avenir;
+    text-align: center;
+    color:#000;
+    font-size: 17px;
+    margin-bottom: 20px;
+}
+
+.button-start-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-start {
+    width:100px;
+    height: 100px;
+    background: url("../img/button-start-off.svg") no-repeat center;
+    background-size: 100%;
+    display: block;
+}
+
+.button-start.active-state {
+    background-image: url("../img/button-start-on.svg");
+}
+
+.button-stop {
+    width:100px;
+    height: 100px;
+    background: url("../img/button-stop-off.svg") no-repeat center;
+    background-size: 100%;
+    margin:0 auto;
+    display: block;
+}
+
+.button-stop.active-state {
+    width:100px;
+    height: 100px;
+    background-image: url("../img/button-stop-on.svg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.page-speedometer-wrapper {
+
+}
+
+.speedometer {
+    width:300px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    background: url("../img/speedometer-bg.svg") no-repeat center;
+    background-size: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+
+.speedometer-arrow {
+    width:50px;
+    height: 150px;
+    transform-origin: center 122px;
+    transform: rotate(-101deg);
+    margin-top:30px;
+    transition: transform 0.5s;
+    background: url("../img/speedometer-arrow.png") center no-repeat;
+    background-size:cover;
+}
+
+
+
+.speedometer-digital {
+    width:66px;
+    height: 35px;
+    background-image: linear-gradient(-180deg, #4E5F69 0%, #859CAD 100%);
+    box-shadow: 0px 1px 1px 0px rgba(249,249,249,0.68), inset 0px 1px 1px 0px #404C54;
+    border-radius: 7px;
+    position: absolute;
+    bottom: 32px;
+    left:117px;
+    color:white;
+    font-family: DS-DIGI;
+    font-size: 32px;
+    text-shadow: 1px 1px 2px #3a3a3a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.result {
+    display: none;
+    text-align: center;
+}
+
+.result-distance {
+    font-size: 26px;
+}
+
+.result-speed {
+    font-size:20px;
+}
+
+.results .swipeout-content .col {
+    margin-left:-40px;
+}
+
+.ipad .results .swipeout-content .col {
+    margin-left:0;
+}
+
+.distance-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.distance-wrapper .distance {
+    min-width:73px;
+    height: 36px;
+    background-color: #E7E7E7;
+    border-radius: 6px;
+    box-shadow: 0px 1px 1px #9BADBC, inset 0px 1px 1px #2C363D;
+    color:#2D363C;
+    font-family: DS-DIGI;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:5px;
+}
+
+.distance-wrapper .distance-subtext {
+    margin-top:5px;
+    font-weight: 100;
+    letter-spacing: 1.5px;
+    text-shadow: 1px 1px 3px black;
+}
+
+.angle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width:100%;
+    margin-top:5px;
+    margin-bottom: 5px;
+}
+
+.angle-beta,
+.angle-gamma {
+    width:120px;
+    height:120px;
+    background: url("../img/angle-bg.svg") no-repeat center;
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.angle-beta-inner,
+.angle-gamma-inner {
+    width:88px;
+    height: 88px;
+    content: '';
+    display: block;
+    background: url("../img/angle-beta.png") no-repeat center;
+    background-size: 100%;
+    transition: transform 1s;
+    transform: rotate(0deg);
+}
+
+.angle-gamma-inner {
+    background: url("../img/angle-gamma.png") no-repeat center;
+    background-size: 100%;
+    transform-origin: 35px 27px;
+    margin-top: 13px;
+}
+
+.button-calibrate {
+    width:50px;
+    height:50px;
+    background: url("../img/button-calibrate-off.png");
+    background-size: 100%;
+    border-radius: 50%;
+}
+
+.button-calibrate.active-state {
+    background-image: url("../img/button-calibrate-on.png");
+}
+
+.results .row.head {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.results .swipeout-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px 0;
+}
+
+
+.results .swipeout:nth-child(even){
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.results .row .col {
+    padding: 10px 0;
+    text-align: center;
+    flex:0 0 100px;
+}
+
+.results-units {
+    color: rgba(255, 255, 255, 0.31);
+    text-transform: uppercase;
+}
+
+.results .empty {
+    display: none;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    width:100%;
+    padding-top: 20px;
+}
+
+/**
+ * TODO: высоты для разных устройств
+ **/
+
+.results .data {
+    /*max-height: 570px;*/
+    max-height: 464px;
+    overflow: scroll;
+    margin:0;
+    padding: 0;
+    font-size: 15px;
+}
+
+@media (min-height: 500px) and (max-height: 800px){
+    .results .data {
+        max-height: 533px;
+    }
+}
+
+.results .list-block .swipeout {
+    overflow: hidden;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.results .swipeout-actions-right a {
+    background: #DD0037 url("../img/icon-delete.svg") no-repeat center;
+}
+
+.settings ul {
+    background-color: transparent;
+}
+
+.settings .arrow-right {
+    width:30px;
+    height: 30px;
+    background-image: url("../img/arrow-right.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    margin-top:-3px;
+}
+
+@media (min-width: 320px ) and (min-height: 480px) and (max-height: 500px){
+    .angle-gamma-inner {
+        transform-origin: 44px 34px;
+        margin-top: 15px;
+    }
+
+    .speedometer {
+        width: 200px;
+        height: 162px;
+    }
+    .speedometer-arrow {
+        width: 30px;
+        height: 100px;
+        transform-origin: center 78px;
+        margin-top: 20px;
+    }
+
+    .angle-beta,
+    .angle-gamma {
+        width:90px;
+        height: 90px;
+    }
+
+    .angle-beta-inner,
+    .angle-gamma-inner {
+        width:64px;
+        height: 64px;
+    }
+
+    .angle-gamma-inner {
+        transform-origin: 32px 25px;
+        margin-top: 11px;
+    }
+
+    .speedometer-digital {
+        width:45px;
+        height: 30px;
+        font-size: 24px;
+        bottom: 15px;
+        left: 77px;
+    }
+    .distance-wrapper .distance{
+        min-width: 60px;
+        height: 30px;
+        font-size: 32px;
+    }
+
+    .app-free .button-stop {
+        width:70px;
+        height: 70px;
+        margin-top:-15px;
+    }
+
+    .result-distance {
+        font-size:22px;
+    }
+
+    .result-speed {
+        font-size: 18px;
+    }
+
+    .logo-start-screen {
+        height: 100px;
+    }
+
+    .results .data {
+        max-height: 374px;
+    }
+
+    .app-free .results .data {
+        max-height: 324px;
+    }
+}
+
+@media(min-width: 300px) and (min-height: 500px) and (max-height: 600px) {
+    .speedometer-digital {
+        bottom: 21px;
+        left:88px;
+    }
+    .speedometer {
+        width:240px;
+        height: 200px;
+    }
+    .speedometer-arrow {
+        width: 40px;
+        height: 120px;
+        transform-origin: center 95px;
+        margin-top: 27px;
+    }
+
+    .angle-beta-inner,
+    .angle-gamma-inner {
+        width:70px;
+        height: 70px;
+    }
+
+    .angle-beta,
+    .angle-gamma {
+        width:100px;
+        height: 100px;
+    }
+
+    .angle-wrapper {
+        margin-bottom: 0;
+    }
+
+    .button-stop, .button-stop.active-state {
+        width:85px;
+        height: 85px;
+    }
+
+    .result-distance {
+        font-size: 22px;
+    }
+
+    .result-speed {
+        font-size: 18px;
+    }
+
+    .app-free .results .data {
+        max-height: 370px;
+    }
+}
+
+@media(min-width: 375px) and (min-height: 600px) {
+    .distance-wrapper {
+        margin-top:5%;
+        margin-bottom: 5%;
+    }
+
+    .angle-gamma-inner {
+        transform-origin: 44px 33px;
+        margin-top: 20px;
+    }
+
+    .app-free .results .data {
+        max-height: 500px;
+    }
+
+}
+
+@media(min-width: 375px) and (min-height: 700px) {
+    .distance-wrapper {
+        margin-top:5%;
+        margin-bottom:5%;
+    }
+
+    .angle-wrapper {
+        margin-bottom:10%;
+    }
+
+    .app-free .results .data {
+        max-height: 570px;
+    }
+}
+
+@media(min-width: 768px) and (min-height: 1000px) {
+    .distance-wrapper {
+        margin-top:5%;
+        margin-bottom:5%;
+    }
+
+    .angle-wrapper {
+        margin-bottom:5%;
+    }
+
+    .speedometer {
+        width: 500px;
+        height: 410px;
+    }
+
+    .speedometer-arrow {
+        width: 70px;
+        height: 200px;
+        margin-top:88px;
+        transform-origin: center 160px;
+    }
+
+    .speedometer-digital {
+        left:200px;
+        width:100px;
+        height: 50px;
+        bottom: 60px;
+        font-size: 44px;
+    }
+
+    .distance-wrapper .distance {
+        min-width: 100px;
+        height: 50px;
+        font-size: 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .angle-beta, .angle-gamma {
+        width: 200px;
+        height: 200px;
+    }
+
+    .angle-beta-inner, .angle-gamma-inner {
+        /*width: 107px;
+        height: 107px;*/
+        width:145px;
+        height: 120px;
+    }
+
+    .button-stop, .button-stop.active-state {
+        width: 150px;
+        height: 150px;
+    }
+
+    .button-calibrate {
+        width:80px;
+        height: 80px;
+    }
+
+    .button-start {
+        width:150px;
+        height: 150px;
+    }
+
+    .result-distance {
+        font-size: 30px;
+    }
+
+    .result-speed {
+        font-size: 28px;
+    }
+
+    .angle-gamma .angle-gamma-inner {
+        transform-origin: 72px 44px;
+        margin-top: 28px;
+    }
+
+    .col, .head .col {
+        flex: 0 0 250px !important;
+        text-align: center !important;
+    }
+
+    .list-block.data {
+        max-height:900px;
+    }
+
+    .app-free .list-block.data {
+        max-height: 830px;
+    }
+
+    .app-free .angle-wrapper {
+        margin-top:-30px;
+    }
+
+    .app-free .button-stop {
+        margin-top:-70px;
+    }
+
+}
+
+
+@media(min-height: 650px) and (max-height: 700px) {
+    .app-free .button-stop {
+        margin-top:-30px;
+    }
+}
+
+@media(min-height: 700px) and (max-height: 900px) {
+    .results .data {
+        max-height: 600px;
+    }
+
+    .app-free .results .data {
+        max-height: 570px;
+    }
+}
+
+@media(height: 568px) {
+    .app-paid .results .data {
+        max-height: 443px;
+    }
+}
+
+@media(height: 480px) {
+    .app-paid .results .data {
+        max-height: 354px;
+    }
+
+    .app-paid .button-stop {
+        margin-top:-5px;
+    }
+}

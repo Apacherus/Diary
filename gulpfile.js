@@ -20,7 +20,9 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     cssBase64 = require('gulp-css-base64'),
     runSequence = require('run-sequence'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    gutil = require("gulp-util"),
+    webpack = require("gulp-webpack");
 
 var path = {
     build: {
@@ -99,15 +101,31 @@ var data = function () {
 gulp.task('data:build', data);
 
 gulp.task('js:build', function () {
-    gulp.src(path.src.js)
+    gulp.src('src/js/app.js')
         .pipe(plumber())
-        .pipe(rigger())
+        //.pipe(rigger())
         //.pipe(browserify())
         //.pipe(reactify)
-        .pipe(react())
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.init())
+        .pipe(webpack({
+            output: {
+                //path: "./www/",
+                filename: "app.js"
+            },
+            devtool: "#inline-source-map",
+            module: {
+                loaders: [
+                    { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+                ]
+            }
+        }, null, function(err, stats) {
+            if(err) {
+                throw new gutil.PluginError("webpack", err);
+            }
+            gutil.log("[webpack]", stats.toString())
+        }))
+        //.pipe(uglify())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest(path.build.js))
         .pipe(reload({stream: true}));
 });
@@ -128,29 +146,44 @@ gulp.task('js:build-prod', function () {
 
 
 gulp.task('sass:build', function(){
-    return gulp.src(path.src.sass)
+    return gulp.src('./src/css/**/*.scss')
+        .pipe(plumber())
         .pipe(sass({
             sourceMap:true,
             errLogToConsole: true
         }))
-        .pipe(plumber())
-        .pipe(gulp.dest(path.dist.tmp.css))
+        .pipe(prefixer({
+            browsers: ['last 15 versions'],
+            cascade: false
+        }))
+        .pipe(cssBase64({
+            maxWeightResource: 50000
+        }))
+        .pipe(gulp.dest(path.build.css))
         .pipe(reload({stream:true}));
 });
 
 gulp.task('sass:build-prod', function(){
-    return gulp.src(path.src.sass)
+    return gulp.src('./src/css/**/*.scss')
         .pipe(sass({
             sourceMap:false,
             errLogToConsole: true
         }))
-        .pipe(gulp.dest(path.dist.tmp.css))
+        .pipe(prefixer({
+            browsers: ['last 15 versions'],
+            cascade: false
+        }))
+        .pipe(cssBase64({
+            maxWeightResource: 50000
+        }))
+        .pipe(gulp.dest(path.build.css))
         .pipe(reload({stream:true}));
 });
 
 
 
 gulp.task("style-after-sass:build", function() {
+    return;
     return gulp.src(path.dist.tmp.css)
         .pipe(plumber())
         .pipe(prefixer({
@@ -165,6 +198,7 @@ gulp.task("style-after-sass:build", function() {
 });
 
 gulp.task("style-after-sass:build-prod", function() {
+    return;
     return gulp.src(path.dist.tmp.css)
         .pipe(prefixer({
             browsers: ['last 15 versions'],
@@ -445,7 +479,7 @@ gulp.task('watch', function(){
     watch([path.watch.style], function(event, cb) {
         gulp.start('style:build');
     });
-    watch([path.src.sass], function(event, cb) {
+    watch(['./src/css/**/*.scss'], function(event, cb) {
         gulp.start('sass:build');
     });
     watch([path.watch.js], function(event, cb) {

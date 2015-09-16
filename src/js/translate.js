@@ -1,4 +1,5 @@
-var translate = {
+//var translate =
+module.exports = {
     you_result: {
         ru: "Ваш результат",
         en: "Your result",

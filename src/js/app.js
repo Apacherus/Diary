@@ -1,13 +1,16 @@
 /**
- * Created by user on 01.09.15.
+ * Created by Vladimir Kudryavtsev on 17.09.15.
+ * Copyright © Academ Media, LTD
+ * Copyright © Vladimir Kudryavtsev
  */
 
 import translate from "./translate";
 import notes from './notes';
+import profile from './components/profile';
 
 import './components/button-note';
 import "./components/goal-view";
-
+import './components/diary-eat-next.js';
 
 /**
  * console.warn
@@ -69,6 +72,7 @@ var app = {
         window.app = app;
 
         app.notes = notes;
+        app.notes.Load();
 
         app.isProd = app.indexOfVal(document.getElementsByTagName('body')[0].classList, "app-prod") >= 0;
 
@@ -185,7 +189,6 @@ var app = {
             }
         }
 
-
         /**
          * Библиотека для работы с нативными функциями iOS и Android
          */
@@ -235,6 +238,9 @@ var app = {
 
         window.addEventListener('appCloseEvent', app.onhide);
         window.addEventListener('appMaximizeEvent', app.onrestore);
+
+        app.profile = profile;
+        app.notes = notes;
 
 
         app.loadingStart();
@@ -325,8 +331,16 @@ var app = {
             el: '#button-note'
         });
 
-        var goal = new Vue({
-            el: '.goal'
+        app.btn = buttonNote;
+
+        new Vue({
+            el: '.page-content',
+            data:{
+                eatNext:{
+                    title:'Eat',
+                    id:'1'
+                }
+            }
         });
     },
 

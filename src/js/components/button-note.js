@@ -1,5 +1,5 @@
 import '../filters/translate'
-import goalView from './goal-view'
+import './note-add.js'
 
 var button;
 button = Vue.component('button-note', {
@@ -31,8 +31,8 @@ button = Vue.component('button-note', {
         </li>
     </ul>
     </div>
-    <goal-view></goal-view>
     <div v-on="click: buttonClick(null, $event)" class="blur-back-shadow"></div>
+    <note-add v-ref="noteAdd"></note-add>
     `,
 
     methods: {
@@ -40,22 +40,38 @@ button = Vue.component('button-note', {
             e.stopPropagation();
             this.isClosed = !this.isClosed;
 
+            if(btn){
+                this.$.noteAdd.newNote(btn);
+            }
+
             if(!this.isClosed){
+                app.dom7('.button-note-item .tip').css({
+                    'display':'inline-block',
+                    'pointer-events':'all'
+                });
                 app.dom7('.page').addClass('blur');
                 app.dom7('.navbar').addClass('blur');
                 app.dom7('.blur-back-shadow').css({'opacity':'0.2', 'display':'block'});
             } else {
+                app.dom7('.blur-back-shadow').css('pointer-events', 'none');
+                app.dom7('.button-note').css('pointer-events', 'none');
                 app.dom7('.page').removeClass('blur');
                 app.dom7('.navbar').removeClass('blur');
                 app.dom7('.blur-back-shadow').css('opacity', '0');
                 setTimeout(function(){
+                    app.dom7('.blur-back-shadow').css('pointer-events', 'all');
+                    app.dom7('.button-note').css('pointer-events', 'all');
                     app.dom7('.blur-back-shadow').css('display', 'none');
+                    app.dom7('.button-note-item .tip').css('display', 'none');
                 }, 300);
             }
+
+
         }
     },
 
     ready: function () {
+        console.log(this);
         /**
          * на разных языка ширина заголовка разная, учтем это
          * 10 => triangle width

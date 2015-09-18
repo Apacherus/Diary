@@ -1,5 +1,8 @@
 import storage from './storage';
+import profile from './components/profile';
+
 var notes = {
+    data:[],
     /**
      *
      * @param options = {type, isGone, created, date, type, title, text, notify, products, weight, height, water};
@@ -92,24 +95,35 @@ var notes = {
         };
 
         this.save = function(){
-            var json = JSON.stringify(this);
-            var db = storage.getDB();
+            //var json = JSON.stringify(this);
+            var db = profile.db;
             if(!db.notes) {
                 db.notes = [];
             }
-
-            db.notes.push(json);
-            storage.setDB(db);
+            db.notes.push(this);
+            profile.save();
         };
 
     },
 
-    EatNote : function (products, title, date) {
-        if (typeof products == "undefined") products = [];
+    WriteNote : function(text, date){
+        if(!text || !text.length) return false;
+        var options = {};
+        options.type = 'note';
+        options.date = typeof date == "undefined" ? '' : date;
+        options.isGone = false;
+        options.notify = true;
+        options.created = new Date();
+        options.text = text;
+        return new notes.Note(options);
+    },
+
+    EatNote : function (products, title = null, date = undefined) {
+        if (typeof products == "undefined" || !products) products = [];
         if (!title) title = '';
         var options = {};
         options.type = 'eat';
-        options.date = typeof date == "undefined" ? '' : date;
+        options.date = (typeof date == "undefined" || !date) ? '' : date;
         options.isGone = false;
         options.notify = true;
         options.created = new Date();
@@ -135,6 +149,7 @@ var notes = {
         options.date = typeof date == "undefined" ? '' : date;
         options.height = height;
         options.weight = weight;
+        options.type = 'measure';
 
         return new notes.Note(options);
     },
@@ -145,21 +160,46 @@ var notes = {
             return this.getTime();
         };
 
-        var db = storage.getDB();
-        if(db.notes){
-            db.notes = db.notes.map(function(n){return JSON.parse(n);});
-        } else {
+        var db = profile.db;
+        if(!db.notes){
             db.notes = [];
         }
         for(var i = 0; i < db.notes.length; i++){
             db.notes[i].date = new Date(db.notes[i].date);
-            //db.notes[i].date.toString = toString;
             db.notes[i].date.toJSON = toString;
             db.notes[i].created = new Date(db.notes[i].created);
-            //db.notes[i].created.toString = toString;
             db.notes[i].created.toJSON = toString;
         }
+
+        this.data = db.notes;
+
         return db.notes;
+    },
+
+    last: function(type = 'eat'){
+        for(var i = this.data.length-1; i>=0; i--){
+            if(this.data[i].type == type){
+                return this.data[i];
+            }
+        }
+
+        return null;
+    },
+
+    /**
+     * возвращает записи после даты date с типом 'eat'
+     * @param date
+     * @param type
+     * @returns {Array}
+     */
+    afterDate: function (date = new Date, type = 'eat') {
+        var n = [];
+        for (var i = 0; i < this.data.length; i++) {
+            if (this.data[i].date > date) {
+                n.push(this.data[i]);
+            }
+        }
+        return n;
     }
 
 };

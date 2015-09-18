@@ -1,4 +1,4 @@
-var storage = require('./storage');
+import storage from './storage';
 
 var settings = {
     load: function () {
@@ -9,7 +9,7 @@ var settings = {
             settings.notFirstLaunch = true;
         }
         app.settings = settings;
-        settings.settingsSave();
+        //settings.settingsSave();
     },
     save: function () {
         var db = storage.get();
@@ -22,4 +22,4 @@ var settings = {
     }
 };
 
-module.exports = settings;
+export default settings;

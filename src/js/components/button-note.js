@@ -71,7 +71,6 @@ button = Vue.component('button-note', {
     },
 
     ready: function () {
-        console.log(this);
         /**
          * на разных языка ширина заголовка разная, учтем это
          * 10 => triangle width

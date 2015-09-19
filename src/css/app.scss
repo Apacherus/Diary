@@ -551,3 +551,21 @@ $goalRoundInnerSize_iPhone6:$goalRoundSize_iPhone6 - $goalRoundsSpaceBetween;
     margin-left: 10px;
   }
 }
+
+.products-list {
+  ul, li {
+    padding: 0;
+    list-style: none;
+  }
+  li.product {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $colorGray;
+    border-top: 1px solid $colorGray;
+  }
+}
+
+.note-add-eat-list {
+  max-height: 448px;
+  overflow: scroll;
+}

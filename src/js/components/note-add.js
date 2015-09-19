@@ -4,6 +4,9 @@
  * Copyright © Vladimir Kudryavtsev
  */
 
+import './note-add-eat.js'
+
+
 var noteAdd = Vue.component('note-add', {
 
     template:`
@@ -14,10 +17,7 @@ var noteAdd = Vue.component('note-add', {
         </div>
         </div>
         <div class="popup tablet-fullscreen popup-note-add-eat">
-        <div class="content-block">
-            test eat
-            <a href="#" class="close-popup">Close</a>
-        </div>
+        <note-add-eat></note-add-eat>
         </div>
         <div class="popup tablet-fullscreen popup-note-add-note">
         <div class="content-block">

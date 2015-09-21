@@ -287,12 +287,6 @@ var app = {
             }
         }
     },
-    /**
-     * Deprecated
-     **/
-    getStr: function () {
-        return warn("getStr deprecated, use \"\".translate() instead");
-    },
 
     translate: function () {
         var toTranslate = app.dom7('[data-translate]');

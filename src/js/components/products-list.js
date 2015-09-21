@@ -55,6 +55,7 @@ Vue.component('products-list', {
                     var product_id = this.cats[i].products[j];
                     this.cats[i].products[j] = products[this.cats[i].products[j]];
                     this.cats[i].products[j].id = product_id;
+
                 }
 
                 this.cats[i].show = false;

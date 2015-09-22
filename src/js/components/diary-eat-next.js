@@ -1,6 +1,6 @@
 /**
  * Created by Vladimir Kudryavtsev on 18.09.15.
- * Copyright © Academ Media, LTD
+ * Copyright © Academ Media, LLC
  * Copyright © Vladimir Kudryavtsev
  */
 
@@ -19,9 +19,26 @@ var diaryEatNext = Vue.component('diary-eat-next', {
     </div>
     `,
     compiled: function(){
-        this.nextNote = app.notes.afterDate()[0];
-        if(this.nextNote){
-            this.time = this.nextNote.date;
+        app.em.listen('notesStoreChanged', this.update);
+        this.update();
+    },
+
+    methods: {
+        update: function(){
+            this.nextNote = app.notes.afterDate().sort(function(a, b){
+                if(a.date < b.date)
+                {
+                    return -1;
+                }
+                if(a.date > b.date)
+                {
+                    return 1;
+                }
+                return 0;
+            })[0];
+            if(this.nextNote){
+                this.time = this.nextNote.date;
+            }
         }
     }
 

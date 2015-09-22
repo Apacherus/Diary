@@ -1,0 +1,20 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="settings-open">
+                <i class="icon icon-settings"></i>
+            </a>
+        </div>
+        <div class="center sliding" data-translate="title">Diary: {{title|formatDate}}</div>
+        <div class="right">
+            <a href="#" class="list-open" v-on="click: openDatePicker()">
+                <i class="icon icon-calendar"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div data-page="diary" class="page">
+    <div class="page-content">
+        <diary-view v-ref="diaryView"></diary-view>
+    </div>
+</div>

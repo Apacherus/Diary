@@ -1,6 +1,6 @@
 /**
  * Created by Vladimir Kudryavtsev on 17.09.15.
- * Copyright © Academ Media, LTD
+ * Copyright © Academ Media, LLC
  * Copyright © Vladimir Kudryavtsev
  */
 
@@ -11,6 +11,15 @@ import profile from './components/profile';
 import './components/button-note';
 import "./components/goal-view";
 import './components/diary-eat-next.js';
+import './components/diary-view.js';
+import './components/diary-datepicker.js'
+import EventManager from './eventManager.js'
+
+/**
+ * npm modules
+ */
+import moment from 'moment'
+
 
 /**
  * console.warn
@@ -23,7 +32,7 @@ var app = {
     config: {
         f7_enable: true,
         f7_config: {
-            template7Pages: true
+
         },
         dom7_enable: true,
         JSAPI_enable: true,
@@ -65,14 +74,18 @@ var app = {
         languageCurrent: 'ru'
     },
 
+    em: new EventManager,
+
     /**
      * Инициализация приложения
      */
     init: function () {
-        window.app = app;
 
-        app.notes = notes;
-        app.notes.Load();
+        if("app" in window){
+            throw new Error("app object already defined!");
+        }
+
+        window.app = app;
 
         app.isProd = app.indexOfVal(document.getElementsByTagName('body')[0].classList, "app-prod") >= 0;
 
@@ -80,18 +93,19 @@ var app = {
 
         /**
          * определяем язык
-         * var lang = window.location.search.substr(1) || 'en';
-         * app.meta.languageCurrent = app.indexOfVal(app.meta.language, lang);
-         * app.dom7('body').addClass('lang-'+app.meta.language[app.meta.languageCurrent]);
-         **/
-
-        /**
-         * определяем язык 2
          **/
 
         var lang = document.getElementsByTagName('html')[0].getAttribute('lang') || app.meta.languageDefault;
         app.meta.languageCurrent = lang;
         document.getElementsByTagName('body')[0].classList.add('lang-' + lang);
+
+        /**
+         * moment.js - library for date formatting
+         */
+        if(moment){
+            app.moment = moment;
+            app.moment.locale(app.meta.languageCurrent||app.meta.languageDefault);
+        }
 
         /**
          * определяем платформу
@@ -143,32 +157,9 @@ var app = {
             return this;
         };
 
-        /**
-         * Translation
-         **/
-        app.config.f7_config.template7Data = {
-            'url:speed.html': {
-                distance: 'Distance'.translate(),
-                units: 'km'.translate()
-            },
-            'page:settings': {
-                title: 'Settings'.translate(),
-                measureUnits: 'Units of measure'.translate(),
-                useGPS: 'Use GPS'.translate(),
-                calibration: 'Calibrate'.translate(),
-                KM: 'Kilometers'.translate(),
-                M: 'Miles'.translate()
-            },
-            'page:results': {
-                title: 'Results'.translate(),
-                date: 'Date'.translate(),
-                distance: 'Distance'.translate(),
-                speed: 'Speed'.translate(),
-                noData: 'Нет данных'.translate(),
-                unitsDistance: 'km'.translate(),
-                unitsSpeed: 'km/h'.translate()
-            }
-        };
+
+        app.notes = notes;
+        app.notes.Load();
 
         if (app.config.f7_enable) {
             app.f7 = new Framework7(app.config.f7_config);
@@ -214,8 +205,8 @@ var app = {
             app.ad();
         });
 
-        app.f7.onPageInit('speed', function (page) {
-            app.pageInitSpeed(page);
+        app.f7.onPageInit('diary', function (page) {
+            app.pageInitDiary(page);
         });
 
         app.f7.onPageInit('results', function (page) {
@@ -321,24 +312,32 @@ var app = {
         Vue.config.debug = true;
         //app.view.router.loadPage("settings.html");
 
-        var buttonNote = new Vue({
-            el: '#button-note'
-        });
-
-        app.btn = buttonNote;
-
-        new Vue({
-            el: '.page-content',
+        app.vue = new Vue({
+            el: 'body',
             data:{
-                eatNext:{
-                    title:'Eat',
-                    id:'1'
-                }
+                title:'Calorie Diary'
             }
         });
+
+
     },
 
     pageIndexReinit: function (page) {
+    },
+
+    pageInitDiary: function(){
+        app.diary = new Vue({
+            data:{
+                date:'123',
+                title:''
+            },
+            el: 'body',
+            methods:{
+                openDatePicker: function(){
+                    this.$.diaryView.openDatePicker();
+                }
+            }
+        });
     },
 
     loadingStart: function () {

@@ -102,6 +102,8 @@ var notes = {
             }
             db.notes.push(this);
             profile.save();
+
+            app.em.event("notesStoreChanged");
         };
 
     },
@@ -187,6 +189,26 @@ var notes = {
     },
 
     /**
+     * возвращает записи соответствующие дате date
+     * по умолчанию date = today
+     * @param date
+     */
+    forDate: function(date = new Date){
+        var n = [];
+        for (var i = 0; i < this.data.length; i++) {
+            var noteDate = this.data[i].date;
+            if (
+                noteDate.getDate() == date.getDate() &&
+                noteDate.getMonth() == date.getMonth() &&
+                noteDate.getFullYear() == date.getFullYear()
+            ) {
+                n.push(this.data[i]);
+            }
+        }
+        return n;
+    },
+
+    /**
      * возвращает записи после даты date с типом 'eat'
      * @param date
      * @param type
@@ -195,7 +217,7 @@ var notes = {
     afterDate: function (date = new Date, type = 'eat') {
         var n = [];
         for (var i = 0; i < this.data.length; i++) {
-            if (this.data[i].date > date) {
+            if (this.data[i].date > date && this.data[i].type == 'eat') {
                 n.push(this.data[i]);
             }
         }

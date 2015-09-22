@@ -22,7 +22,7 @@
                         <i class="icon icon-settings"></i>
                     </a>
                 </div>
-                <div class="center sliding" data-translate="title"></div>
+                <div class="center sliding" data-translate="title">{{title}}</div>
                 <div class="right">
                     <a href="results.html" class="list-open">
                         <i class="icon icon-results"></i>
@@ -36,12 +36,15 @@
                     <div class="goal">
                         <goal-view v-ref="goal"></goal-view>
                     </div>
-                    <diary-eat-next></diary-eat-next>
+                    <a href="diary.html">Diary</a>
+                    <diary-eat-next v-ref="eatNext"></diary-eat-next>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<diary-datepicker v-ref="datepicker"></diary-datepicker>
 
 <div id="button-note">
     <button-note></button-note>

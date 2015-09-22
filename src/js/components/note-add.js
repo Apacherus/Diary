@@ -1,20 +1,17 @@
 /**
  * Created by Vladimir Kudryavtsev on 18.09.15.
- * Copyright © Academ Media, LTD
+ * Copyright © Academ Media, LLC
  * Copyright © Vladimir Kudryavtsev
  */
 
 import './note-add-eat.js'
-
+import './note-add-water.js'
 
 var noteAdd = Vue.component('note-add', {
 
     template:`
         <div class="popup tablet-fullscreen popup-note-add-water">
-        <div class="content-block">
-            test water
-            <a href="#" class="close-popup">Close</a>
-        </div>
+        <note-add-water></note-add-water>
         </div>
         <div class="popup tablet-fullscreen popup-note-add-eat">
         <note-add-eat></note-add-eat>

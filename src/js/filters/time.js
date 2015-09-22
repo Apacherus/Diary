@@ -30,3 +30,36 @@ Vue.filter('time', function(val){
         return date + ', ' + time;
     }
 });
+
+/**
+ * @date {Date}
+ */
+Vue.filter('formatDate', function(date){
+
+    if(!date) return;
+    date = app.moment(date);
+
+    if(!date.isValid()){
+        throw new Error("Date is invalid!");
+    }
+
+    var today = app.moment();
+
+    //yesterday, today, tomorrow
+    if(date.isBetween(app.moment(today).subtract(2, 'd'), app.moment(today).add(2, 'd'), 'day')){
+        return date.calendar().split(" ")[0];
+    } else {
+        if(date.isSame(today, 'y')){
+
+            var dateFormat = date.format('ddd, ll').split(" ").splice(0,3).join(" ");
+
+            if(dateFormat[dateFormat.length-1] == ','){//en format "Tue, Sep 22," <- need to remove ","
+                dateFormat = dateFormat.slice(0, -1);
+            }
+
+            return dateFormat;
+        }
+
+        return date.format('ddd, ll');
+    }
+});

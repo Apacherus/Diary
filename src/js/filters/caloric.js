@@ -5,6 +5,8 @@
  */
 
 Vue.filter('caloric', function(v){
+
+    if(!v) return;
     if(!v.length) return 0;
 
     var caloric = 0;

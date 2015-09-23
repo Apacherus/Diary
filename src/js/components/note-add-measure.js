@@ -4,17 +4,17 @@
  * Copyright © Vladimir Kudryavtsev
  */
 
-Vue.component('note-add-water', {
+Vue.component('note-add-measure', {
 
     template:`
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
-                <a href="#" class="close-popup" data-popup=".popup-note-add-water">
+                <a href="#" class="close-popup" data-popup=".popup-note-add-weight">
                     <i class="icon icon-settings">x</i>
                 </a>
             </div>
-            <div class="center sliding">Water</div>
+            <div class="center sliding">Measure</div>
             <div class="right">
                 <a href="#" class="list-open" v-on="click: submit()">
                     <i class="icon icon-results">v</i>
@@ -22,14 +22,9 @@ Vue.component('note-add-water', {
             </div>
         </div>
     </div>
-    Add water
+    Input your weight:
     <div class="item-input">
         <input type="text" v-model="amount" >
-    </div>
-    <div class="item-input products-count-input-range">
-        <div class="range-slider">
-            <input type="range" min="0" value="{{amount}}" max="{{20}}" step="1" v-model="amount">
-        </div>
     </div>
     `,
 
@@ -42,9 +37,9 @@ Vue.component('note-add-water', {
 
     methods:{
         submit:function(){
-            var note = new app.notes.WaterNote(this.amount);
+            var note = new app.notes.MeasureNote(this.amount);
             note.save();
-            app.f7.closeModal('.popup-note-add-water');
+            app.f7.closeModal('.popup-note-add-weight');
         }
     }
 

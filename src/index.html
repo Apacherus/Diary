@@ -34,9 +34,10 @@
             <div data-page="index" class="page no-swipeback">
                 <div class="page-content">
                     <div class="goal">
-                        <goal-view v-ref="goal"></goal-view>
+                        <goal-view v-ref="goal" testattr="test"></goal-view>
                     </div>
                     <a href="diary.html">Diary</a>
+                    <charts-builder id="indexChart"></charts-builder>
                     <diary-eat-next v-ref="eatNext"></diary-eat-next>
                 </div>
             </div>

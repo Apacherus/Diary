@@ -6,6 +6,8 @@
 
 import './note-add-eat.js'
 import './note-add-water.js'
+import './note-add-measure.js'
+import './note-add-note.js'
 
 var noteAdd = Vue.component('note-add', {
 
@@ -17,16 +19,10 @@ var noteAdd = Vue.component('note-add', {
         <note-add-eat></note-add-eat>
         </div>
         <div class="popup tablet-fullscreen popup-note-add-note">
-        <div class="content-block">
-            test note
-            <a href="#" class="close-popup">Close</a>
-        </div>
+        <note-add-note></note-add-note>
         </div>
         <div class="popup tablet-fullscreen popup-note-add-weight">
-        <div class="content-block">
-            test weight
-            <a href="#" class="close-popup">Close</a>
-        </div>
+        <note-add-measure></note-add-measure>
         </div>
         `,
     created: function(){

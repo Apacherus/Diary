@@ -4,21 +4,23 @@
  * Copyright © Vladimir Kudryavtsev
  */
 
-import translate from "./translate";
-import notes from './notes';
-import profile from './components/profile';
-
 import './components/button-note';
 import "./components/goal-view";
 import './components/diary-eat-next.js';
 import './components/diary-view.js';
 import './components/diary-datepicker.js'
+import './components/charts-builder.js'
+
+import translate from "./translate";
+import notes from './notes';
+import profile from './components/profile';
 import EventManager from './eventManager.js'
 
 /**
  * npm modules
  */
 import moment from 'moment'
+import ChartJS from 'chart.js'
 
 
 /**
@@ -156,6 +158,8 @@ var app = {
 
             return this;
         };
+
+        app.chartjs = ChartJS;
 
 
         app.notes = notes;

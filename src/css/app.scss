@@ -679,7 +679,7 @@ $diaryViewIconWidth:$diaryViewIconWidthGone - 2px;
 
 
 
-    &.note-weight {
+    &.note-measure {
       background-image:url("../img/icon-weight-color.svg");
       border:1px solid $colorGreen;
 
@@ -751,4 +751,15 @@ $diaryViewIconWidth:$diaryViewIconWidthGone - 2px;
   &.shifted {
     margin-top:-300px;
   }
+}
+
+.diary-view-wrapper {
+  max-height: 100%;
+}
+
+
+.charts {
+  display:block;
+  width:100%;
+  height: 150px;
 }

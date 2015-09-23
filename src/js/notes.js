@@ -96,11 +96,43 @@ var notes = {
 
         this.save = function(){
             //var json = JSON.stringify(this);
+
+
+
             var db = profile.db;
             if(!db.notes) {
                 db.notes = [];
             }
             db.notes.push(this);
+
+
+
+            switch(this.type){
+                case 'measure':
+
+                    var lastMeasure =
+                        profile.db.lastMeasure && profile.db.lastMeasure.weight>0?
+                        {
+                            weight:profile.db.lastMeasure.weight,
+                            height:profile.db.lastMeasure.height,
+                            weightDiff:profile.db.lastMeasure.weightDiff
+                        }
+                            :
+                        {
+                            weight:0,
+                            height:0,
+                            weightDiff:0
+                        };
+
+                    profile.db.lastMeasure = {
+                        weight: this.weight,
+                        height: this.height,
+                        weightDiff: lastMeasure.weight || 0 - this.weight || 0 //TODO weight different
+                    };
+                    break;
+            }
+
+
             profile.save();
 
             app.em.event("notesStoreChanged");
@@ -221,6 +253,19 @@ var notes = {
                 n.push(this.data[i]);
             }
         }
+        return n;
+    },
+
+    betweenDates: function(date0 = new Date, date1 = new Date, type = 'eat'){
+        var n = [];
+
+        for(var i = 0; i < this.data.length; i++){
+            var date = this.data[i].date;
+            if(date >= date0 && date <= date1 && this.data[i].type == type){
+                n.push(this.data[i]);
+            }
+        }
+
         return n;
     }
 

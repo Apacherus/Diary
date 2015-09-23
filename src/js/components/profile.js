@@ -45,9 +45,10 @@ var _profile = {
 
         if(!_db.goal){
             _db.goal = {
-                date:new Date(),
+                date:new Date,
                 days:0,
-                weight:0
+                weight:0,
+                startWeight:0
             };
         } else {
             _db.goal.date = new Date(_db.goal.date);

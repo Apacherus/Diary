@@ -224,15 +224,21 @@ var notes = {
      * возвращает записи соответствующие дате date
      * по умолчанию date = today
      * @param date
+     * @param type
      */
-    forDate: function(date = new Date){
+    forDate: function(date = new Date, type = null){
         var n = [];
+
+        if(arguments[0]){
+            date = new Date(date);
+        }
         for (var i = 0; i < this.data.length; i++) {
             var noteDate = this.data[i].date;
             if (
                 noteDate.getDate() == date.getDate() &&
                 noteDate.getMonth() == date.getMonth() &&
-                noteDate.getFullYear() == date.getFullYear()
+                noteDate.getFullYear() == date.getFullYear() &&
+                (type != null?this.data[i].type == type:true)
             ) {
                 n.push(this.data[i]);
             }

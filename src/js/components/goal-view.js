@@ -69,6 +69,7 @@ var goalView = Vue.component('goal-view', {
         this.update();
 
         app.em.listen('notesStoreChanged', this.storeUpdate);
+        app.em.listen('profileGoalSet', this.storeUpdate);
     },
 
     methods:{

@@ -4,6 +4,24 @@
  * Copyright © Vladimir Kudryavtsev
  */
 
+/**
+ * npm modules
+ */
+import moment from 'moment'
+import ChartJS from 'chart.js'
+
+/**
+ * Common app classes
+ */
+import translate from "./translate";
+import notes from './notes';
+import profile from './components/profile';
+import EventManager from './eventManager.js'
+//import Goal from './goal.js'
+
+/**
+ * Web components (vuejs)
+ */
 import './components/button-note';
 import "./components/goal-view";
 import './components/diary-eat-next.js';
@@ -11,20 +29,10 @@ import './components/diary-view.js';
 import './components/diary-datepicker.js'
 import './components/charts-builder.js'
 
-import translate from "./translate";
-import notes from './notes';
-import profile from './components/profile';
-import EventManager from './eventManager.js'
-
-/**
- * npm modules
- */
-import moment from 'moment'
-import ChartJS from 'chart.js'
 
 
 /**
- * console.warn
+ * warn == console.warn
  */
 var warn = function () {
     console.warn.apply(console, arguments);
@@ -236,7 +244,6 @@ var app = {
 
         app.profile = profile;
         app.notes = notes;
-
 
         app.loadingStart();
     },

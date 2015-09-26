@@ -96,6 +96,7 @@ Vue.component('charts-builder', {
             this.drawChart();
         },
         calcChart: function(){
+            console.time('test');
             /**
              * == Хотим подготовить точки дли отрисовки графика
              */
@@ -191,8 +192,6 @@ Vue.component('charts-builder', {
                 }
             }
 
-
-
             if(dataGoal.length > 0 || dataReal.length > 0) {
 
                 var length = dates.length;
@@ -251,6 +250,8 @@ Vue.component('charts-builder', {
             this.options.scaleSteps = (minWeightValue == null || maxWeightValue == null)?0:5;
             this.options.scaleStepWidth = parseInt(((maxWeightValue * 1.2) - (minWeightValue * 0.8))/this.options.scaleSteps) || 0;
             this.options.scaleStartValue = (minWeightValue * 0.8) || 0;
+
+            console.timeEnd('test');
         },
 
         drawChart: function(){

@@ -1,5 +1,4 @@
 import storage from './storage';
-import profile from './components/profile';
 
 var notes = {
     data:[],
@@ -99,7 +98,7 @@ var notes = {
 
 
 
-            var db = profile.db;
+            var db = app.profile.db;
             if(!db.notes) {
                 db.notes = [];
             }
@@ -111,11 +110,11 @@ var notes = {
                 case 'measure':
 
                     var lastMeasure =
-                        profile.db.lastMeasure && profile.db.lastMeasure.weight>0?
+                        app.profile.db.lastMeasure && app.profile.db.lastMeasure.weight>0?
                         {
-                            weight:profile.db.lastMeasure.weight,
-                            height:profile.db.lastMeasure.height,
-                            weightDiff:profile.db.lastMeasure.weightDiff
+                            weight:app.profile.db.lastMeasure.weight,
+                            height:app.profile.db.lastMeasure.height,
+                            weightDiff:app.profile.db.lastMeasure.weightDiff
                         }
                             :
                         {
@@ -124,16 +123,16 @@ var notes = {
                             weightDiff:0
                         };
 
-                    profile.db.lastMeasure = {
+                    app.profile.db.lastMeasure = {
                         weight: this.weight,
                         height: this.height,
-                        weightDiff: lastMeasure.weight || 0 - this.weight || 0 //TODO weight different
+                        weightDiff: - Math.round10(( ( lastMeasure.weight || this.weight ) - this.weight ), -2) //lastMeasure.weight || 0 - this.weight || 0 //TODO weight different
                     };
                     break;
             }
 
 
-            profile.save();
+            app.profile.save();
 
             app.em.event("notesStoreChanged");
         };
@@ -181,8 +180,8 @@ var notes = {
         if (!height) height = -1;
         var options = {};
         options.date = typeof date == "undefined" ? '' : date;
-        options.height = height;
-        options.weight = weight;
+        options.height = Math.round10(height, -1);
+        options.weight = Math.round10(weight, -1);
         options.type = 'measure';
 
         return new notes.Note(options);
@@ -194,7 +193,7 @@ var notes = {
             return this.getTime();
         };
 
-        var db = profile.db;
+        var db = app.profile.db;
         if(!db.notes){
             db.notes = [];
         }

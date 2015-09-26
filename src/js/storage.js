@@ -9,6 +9,7 @@ var storage = {
 
     setDB: function (db, path = "db") {
         localStorage.setItem(path, JSON.stringify(db));
+        app.em.event('storageChanged');
     }
 };
 

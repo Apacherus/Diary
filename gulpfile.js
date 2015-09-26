@@ -10,6 +10,8 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     cssBase64 = require('gulp-css-base64'),
     gutil = require("gulp-util"),
+    webpackBase = require('webpack'),
+    uglify = require('gulp-uglify'),
     webpack = require("gulp-webpack");
 
 var path = {
@@ -101,7 +103,10 @@ gulp.task('js:build', function () {
                 loaders: [
                     { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
                 ]
-            }
+            },
+            plugins: [
+                new webpackBase.ContextReplacementPlugin(/moment[\/\\]locale$/, /ru/)
+            ]
         }, null, function(err, stats) {
             if(err) {
                 throw new gutil.PluginError("webpack", err);
@@ -189,7 +194,7 @@ gulp.task('watch', function(){
         gulp.start('js:build');
     });
     watch([path.watch.img], function(event, cb) {
-        gulp.start('images:build');
+        gulp.start('images:copy');
     });
 
     watch([path.watch.data], function(event, cb) {

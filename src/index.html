@@ -13,19 +13,22 @@
 <body class="app-free app-iOS">
 <div class="loading-overlay"></div>
 <div class="statusbar-overlay"></div>
+
+<main-menu></main-menu>
+
 <div class="views">
     <div class="view view-main">
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="left">
-                    <a href="settings.html" class="settings-open">
-                        <i class="icon icon-settings"></i>
+                    <a href="#" class="open-panel" data-panel="panel-left">
+                        <i class="icon icon-menu"></i>
                     </a>
                 </div>
-                <div class="center sliding" data-translate="title">{{title}}</div>
+                <div class="center sliding">{{title}}</div>
                 <div class="right">
-                    <a href="results.html" class="list-open">
-                        <i class="icon icon-results"></i>
+                    <a href="#">
+                        <i class="icon icon-share"></i>
                     </a>
                 </div>
             </div>

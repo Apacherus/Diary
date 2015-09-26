@@ -1,45 +1,54 @@
-import profile from './profile.js';
-import {rgb2hex} from '../lib/common.js';
-import ProgressBar from '../lib/progressbar.js';
+import {rgb2hex} from '../lib/common.js'
+import ProgressBar from 'progressbar.js'
 
 
 var goalView = Vue.component('goal-view', {
     props:{
         goalWeight:{
             type:Number,
-            default:profile.db.goal.weight || 0
+            default:0
         },
         goalDate:{ //when goal started
             type:Object,
             default:function(){
-                return profile.db.goal.date || new Date();
+                return new Date();
             }
         },
         goalDays:{
             type:Number,
-            default:profile.db.goal.days || 0
+            default:0
         },
         weight:{
             type:Number,
-            default:profile.db.lastMeasure.weight || 0
+            default:0
         },
         weightDiff:{
             type:Number,
-            default:profile.db.lastMeasure.weightDiff || 0
+            default:0
         },
         completed:{
             type:Number,
             default:0
         },
-        circle:Object,
-        goalWeightDiff:Number
+        circle:{
+            type:Object,
+            default:function(){
+                return {};
+            }
+        },
+        goalWeightDiff:{
+            type:Number,
+            default:0
+        }
     },
 
     template:`
     <div class="goal-view">
         <div class="goal-left">
-            <div>{{weightDiff}} kg</div>
+            <div class="goal-diff-title-up" v-class="hide : weightDiff <= 0 "></div>
+            <div>{{weightDiff>0?"+ "+weightDiff:weightDiff==0?0:"- " + weightDiff.toString().substr(1)}} kg</div>
             <div>real</div>
+            <div class="goal-diff-title-down" v-class="hide : weightDiff >= 0"></div>
         </div>
         <div class="goal-middle">
             <div class="goal-round"></div>
@@ -55,21 +64,30 @@ var goalView = Vue.component('goal-view', {
             </div>
         </div>
         <div class="goal-right">
-            <div>{{goalWeightDiff}} kg</div>
+            <div class="goal-diff-title-up green" v-class="hide : goalWeightDiff <= 0 "></div>
+            <div>{{goalWeightDiff>0?"+ "+goalWeightDiff:goalWeightDiff==0?0:"- " + goalWeightDiff.toString().substr(1)}} kg</div>
             <div>goal</div>
+            <div class="goal-diff-title-down green" v-class="hide : goalWeightDiff >= 0"></div>
         </div>
     </div>
     `,
 
     compiled: function(){
-        this.calc();
+
     },
 
     ready:function(){
+
+        this.goalWeight = app.profile.db.goal.weight || 0;
+        this.goalDate = app.profile.db.goal.date || new Date;
+        this.goalDays = app.profile.db.goal.days || 0;
+        this.weight = app.profile.db.lastMeasure.weight || 0;
+        this.weightDiff = app.profile.db.lastMeasure.weightDiff || 0;
+        this.calc();
+
         this.update();
 
         app.em.listen('notesStoreChanged', this.storeUpdate);
-        app.em.listen('profileGoalSet', this.storeUpdate);
     },
 
     methods:{
@@ -79,20 +97,20 @@ var goalView = Vue.component('goal-view', {
 
             var today = new Date();
             var dif =  (today - this.goalDate);
-            var dif_in_days = parseInt(dif/(1000*60*60*24));//дней прошло
+            var dif_in_days = Math.round(dif/(1000*60*60*24));//дней прошло
             this.completed = dif_in_days/this.goalDays || 0;//завершено (0..1)
             var daysLeft = this.goalDays - dif_in_days;//дней осталось
             var weightLeft = this.weight - this.goalWeight;//сколько кг до цели
 
             //Math.round10 - MDN function
-            this.goalWeightDiff = Math.round10(weightLeft / daysLeft, -2) || 0;
+            this.goalWeightDiff = - Math.round10(weightLeft / daysLeft, -2) || 0;
         },
         storeDataGet: function(){
-            this.goalWeight = profile.db.goal.weight || 0;
-            this.goalDate = profile.db.goal.date || new Date;
-            this.goalDays = profile.db.goal.days || 0;
-            this.weight = profile.db.lastMeasure.weight || 0;
-            this.weightDiff = profile.db.lastMeasure.weightDiff || 0;
+            this.goalWeight = app.profile.db.goal.weight || 0;
+            this.goalDate = app.profile.db.goal.date || new Date;
+            this.goalDays = app.profile.db.goal.days || 0;
+            this.weight = app.profile.db.lastMeasure.weight || 0;
+            this.weightDiff = Math.round10(app.profile.db.lastMeasure.weightDiff, -2) || 0;
         },
         update: function(){
             var start = [166, 187, 22];//#A6BB16
@@ -116,6 +134,10 @@ var goalView = Vue.component('goal-view', {
             var screensRatio = - ( ( screenWidth - baseScreenWidth ) / ratio );
             var strokeD = stroke + screensRatio * strokeRatio;
             if(strokeD < stroke) strokeD = stroke;
+
+            if("destroy" in this.circle){
+                this.circle.destroy();
+            }
 
             this.circle = new ProgressBar.Circle('.goal-round', {
                 color: start,

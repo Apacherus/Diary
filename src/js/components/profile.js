@@ -9,14 +9,14 @@ import settings from '../settings';
 
 
 //get current profile
-var db = storage.getDB();
+var db = null;//storage.getDB();
 
-var dbPath = "dbProfile_"+(db.currentProfile || '0');
+var dbPath = null;//"dbProfile_"+(db.currentProfile || '0');
 
 var _profile = {
     notes:null,
     db:null,
-    create: function(_db = {}){
+    create: function(_db = {}, justReturn = false){
         //update db for get last changes (e.g. delete profiles and etc.)
         var dbActual = storage.getDB();
 
@@ -54,6 +54,22 @@ var _profile = {
             _db.goal.date = new Date(_db.goal.date);
         }
 
+        if(!_db.img){
+            _db.img = 'userpic.png';
+        }
+
+        if(!_db.name){
+            _db.name = '';
+        }
+
+
+        /**
+         * Just return profile object, not save to localStorage
+         */
+        if(justReturn){
+            return _db;
+        }
+
         /**
          * I save profile ID in main DB as array of ID's (also i save currentProfile)
          */
@@ -67,29 +83,34 @@ var _profile = {
             }
         }
 
-        dbActual.currentProfile = _db.id;
+        if("currentProfile" in dbActual && dbActual.currentProfile != _db.id){
+            dbActual.currentProfile = _db.id;
+            storage.setDB(dbActual);
+        }
 
         dbPath = "dbProfile_"+_db.id;
 
         this.db = _db;
 
+
         this.save();
 
-        /**
-         * TODO: merge db and dbActual
-         */
-        storage.setDB(dbActual);
+
         db = dbActual;
 
         return _db;
     },
 
     load: function(id = null){
+
+        db = storage.getDB();
+
+        dbPath = "dbProfile_"+(db.currentProfile || '0');
+
         if(id !== null){
             dbPath = "dbProfile_"+id;
         }
         this.create(storage.getDB(dbPath));
-
     },
     save: function(){
         storage.setDB(this.db || {}, dbPath);
@@ -128,9 +149,38 @@ var _profile = {
     set: function (param, value) {
         this.db.settings[param] = value;
         this.save();
+    },
+
+    getAll: function(){
+        var profiles = [];
+        var current = this.getActive();
+        for(var i = 0; i < db.profiles.length; i++){
+            profiles[i] = this.create(storage.getDB("dbProfile_"+db.profiles[i]), true);
+            if(!("id" in profiles[i])){
+                profiles[i].id = -1;
+            }
+            if(!("active" in profiles[i])){
+                profiles[i].active = false;
+            }
+            if(profiles[i].id == current){
+                profiles[i].active = true;
+            }
+        }
+        return profiles;
+    },
+
+    getActive: function(){
+        return db.currentProfile || 0;
+    },
+
+    setActive: function(id){
+        db = storage.getDB();
+        db.currentProfile = id;
+        storage.setDB(db);
+        app.em.event('profileActiveChanged');
     }
 };
 
-_profile.load();
+//_profile.load();
 
 export default _profile;

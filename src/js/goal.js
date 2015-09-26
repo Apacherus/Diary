@@ -7,6 +7,14 @@
 export default class Goal {
 
     constructor(days = 0, weight = 0, startWeight = 0){
+
+        if(days > 90) {
+            days = 90;
+        }
+
+        startWeight = app.notes.last('measure');
+        startWeight = "weight" in startWeight?startWeight.weight:0;
+
         this.goal =  {
             date: new Date,
             days: days,
@@ -21,7 +29,7 @@ export default class Goal {
         if(app && "profile" in app && "db" in app.profile){
             app.profile.db.goal = this.goal;
             app.profile.save();
-            app.em.event("profileGoalSet");
+            //app.em.event("profileGoalSet");
         }
     }
 

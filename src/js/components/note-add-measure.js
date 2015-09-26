@@ -37,7 +37,7 @@ Vue.component('note-add-measure', {
 
     methods:{
         submit:function(){
-            var note = new app.notes.MeasureNote(this.amount);
+            var note = new app.notes.MeasureNote(Math.round10(this.amount, -1));
             note.save();
             app.f7.closeModal('.popup-note-add-weight');
         }

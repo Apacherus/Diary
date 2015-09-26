@@ -9,6 +9,8 @@ $colorGreen:#A6BB16;
 $colorText:#4A4A4A;
 $colorGray:#CDCDCD;
 $colorGrayText:#9B9B9B;
+$colorGrayMenu:#424242;
+$colorGrayMenuActive: #5e5e5e;
 
 /**
  * Sizes
@@ -450,14 +452,41 @@ $goalRoundInnerSize_iPhone6:$goalRoundSize_iPhone6 - $goalRoundsSpaceBetween;
   display: flex;
   flex-direction: row;
 
-  .goal-left, .goal-right, .goal-middle {
+
+  .goal-diff-title-up,
+  .goal-diff-title-down {
+    background: url("../img/triangle-yellow.svg") center bottom no-repeat;
+    min-width: 20px;
+    min-height: 12px;
+  }
+
+  .goal-diff-title-up.green,
+  .goal-diff-title-down.green {
+    background: url("../img/triangle-green.svg") center bottom no-repeat;
+  }
+
+  .goal-diff-title-down {
+    transform: rotate(180deg);
+  }
+
+  .goal-diff-title-up.hide,
+  .goal-diff-title-down.hide {
+    background: none;
+  }
+
+
+
+  .goal-left,
+  .goal-right,
+  .goal-middle {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
   }
 
-  .goal-left, .goal-right {
+  .goal-left,
+  .goal-right {
     flex:0 0 25%;
   }
 
@@ -735,6 +764,20 @@ $diaryViewIconWidth:$diaryViewIconWidthGone - 2px;
 
 }
 
+i.icon.icon-menu {
+  width:24px;
+  height: 24px;
+  background: url("../img/icon-menu.svg") center no-repeat;
+  background-size: auto;
+}
+
+i.icon.icon-share {
+  width:24px;
+  height: 24px;
+  background: url("../img/icon-share.svg") center no-repeat;
+  background-size: auto;
+}
+
 .icon-calendar {
   width:18px;
   height: 20px;
@@ -762,4 +805,116 @@ $diaryViewIconWidth:$diaryViewIconWidthGone - 2px;
   display:block;
   width:100%;
   height: 150px;
+}
+
+.menu-main {
+
+  color:white;
+
+  &.panel {
+    background: $colorGrayMenu;
+    font-weight: 200;
+  }
+
+  .list-block ul {
+    background: $colorGrayMenu;
+  }
+
+  .list-block .item-title {
+    padding-left: 20px;
+  }
+
+  .list-block .item-content {
+    padding-left: 0;
+  }
+
+  .list-block .item-inner:after,
+  .list-block ul:after,
+  .list-block ul:before {
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .list-block .item-link.active-state, html:not(.watch-active-state) .list-block .item-link:active {
+    background: $colorGrayMenuActive;
+  }
+
+  .list-block .item-link .item-inner { 
+    background-image:url("../img/arrow-right.svg");
+  }
+
+  .menu-profiles {
+
+    background-color: rgba(0, 0, 0, 0.1);
+
+    .profiles-list {
+      opacity:0;
+      transition: opacity 0.5s;
+       &.expanded {
+         opacity:1;
+       }
+    }
+
+    .profile {
+      height: 65px;
+      width:100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+
+      .profile-image {
+        padding: 10px;
+      }
+
+      .profile-text {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        font-size:17px;
+
+        .profile-diet {
+          font-size:12px;
+          text-align: left;
+        }
+      }
+
+      .profile-triangle {
+        padding-left: 10px;
+        width:20px;
+        height: 20px;
+        background: url("../img/triangle-wite.svg") no-repeat center;
+        transform: rotate(-180deg);
+        transform-origin: center 11px;
+        transition: transform 0.2s;
+        position: absolute;
+        right:6px;
+        top: calc(50% - 15px);
+        opacity:0.5;
+        &.expanded {
+          transform: rotate(0deg);
+        }
+      }
+
+    }
+
+  }
+}
+
+.menu-main {
+
+  &.list-block {
+    margin-top:0px;
+  }
+
+  ul {
+    transition: transform 0.5s;
+  }
+
+  &.expanded ul{
+
+  }
+
+
 }

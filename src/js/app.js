@@ -17,7 +17,7 @@ import translate from "./translate";
 import notes from './notes';
 import profile from './components/profile';
 import EventManager from './eventManager.js'
-//import Goal from './goal.js'
+import Goal from './goal.js'
 
 /**
  * Web components (vuejs)
@@ -28,6 +28,7 @@ import './components/diary-eat-next.js';
 import './components/diary-view.js';
 import './components/diary-datepicker.js'
 import './components/charts-builder.js'
+import './components/main-menu.js'
 
 
 
@@ -42,7 +43,7 @@ var app = {
     config: {
         f7_enable: true,
         f7_config: {
-
+            swipePanel:'left'
         },
         dom7_enable: true,
         JSAPI_enable: true,
@@ -90,12 +91,6 @@ var app = {
      * Инициализация приложения
      */
     init: function () {
-
-        if("app" in window){
-            throw new Error("app object already defined!");
-        }
-
-        window.app = app;
 
         app.isProd = app.indexOfVal(document.getElementsByTagName('body')[0].classList, "app-prod") >= 0;
 
@@ -170,8 +165,7 @@ var app = {
         app.chartjs = ChartJS;
 
 
-        app.notes = notes;
-        app.notes.Load();
+
 
         if (app.config.f7_enable) {
             app.f7 = new Framework7(app.config.f7_config);
@@ -242,10 +236,11 @@ var app = {
         window.addEventListener('appCloseEvent', app.onhide);
         window.addEventListener('appMaximizeEvent', app.onrestore);
 
-        app.profile = profile;
-        app.notes = notes;
+
 
         app.loadingStart();
+
+
     },
 
     /**
@@ -323,14 +318,14 @@ var app = {
         Vue.config.debug = true;
         //app.view.router.loadPage("settings.html");
 
+       // var goal = new Goal(10, 80).save();
+
         app.vue = new Vue({
             el: 'body',
             data:{
                 title:'Calorie Diary'
             }
         });
-
-
     },
 
     pageIndexReinit: function (page) {
@@ -534,3 +529,10 @@ var app = {
 };
 
 document.addEventListener('DOMContentLoaded', app.init);
+
+window.app = app;
+
+app.profile = profile;
+app.profile.load();
+app.notes = notes;
+app.notes.Load();

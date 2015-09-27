@@ -28,37 +28,55 @@ Vue.component('diary-view', {
         }
     },
     template:`
-    <div class="diary-view-datepicker" v-class="shifted:!calendarOpened">
-        <div id="calendar-inline-container"></div>
-    </div>
-    <div class="diary-view-wrapper">
-        <div class="list-block diary-view">
-            <ul v-show="notes.length">
-                <li class="swipeout" v-repeat="notes" track-by="$index">
-                    <div class="swipeout-content">
-                        <div class="item-content">
-                            <div class="item-media">
-                                <i class="icon note-{{type}}" v-class="gone:date<new Date || isGone"></i>
+    <div class="page cached" data-page="diary">
+        <div class="page-content">
+            <div class="diary-view-datepicker" v-class="shifted:!calendarOpened">
+                <div id="calendar-inline-container"></div>
+            </div>
+            <div class="diary-view-wrapper">
+                <div class="list-block accordion-list diary-view">
+                    <ul v-show="notes.length">
+                        <li class="swipeout accordion-item" v-repeat="notes" track-by="$index">
+                            <div class="swipeout-content">
+                                <div class="item-content accordion-item-toggle">
+                                    <div class="item-media">
+                                        <i class="icon note-{{type}}" v-class="gone:date<new Date || isGone"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title" v-show="type != 'water'">
+                                            {{title}}/{{date|time}}
+                                        </div>
+                                        <div class="item-title" v-show="type == 'water'">
+                                            Water/{{date|time}}
+                                        </div>
+                                        <div class="item-after" v-if="type == 'eat'">
+                                            {{products|caloric}}cal
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="item-inner">
-                                <div class="item-title" v-show="type != 'water'">
-                                    {{title}}/{{date|time}}
-                                </div>
-                                <div class="item-title" v-show="type == 'water'">
-                                    Water/{{date|time}}
-                                </div>
-                                <div class="item-after" v-if="type == 'eat'">
-                                    {{products|caloric}}cal
+                            <div class="accordion-item-content">
+                                <div class="content-block">
+                                  <template v-if="type=='eat'">
+                                    <ul>
+                                        <li v-repeat="products">
+                                        {{title}}:{{cal}}
+                                        </li>
+                                    </ul>
+                                  </template>
+                                  <template v-if="type=='note'">
+                                  <p>{{text}}</p>
+                                  </template>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="swipeout-actions-right">
-                        <a href="#" class="action1 bg-red swipeout-close" v-on="click:alert($index)">Delete</a>
-                    </div>
-                 </li>
-            </ul>
-            <div v-show="!notes.length">No notes for selected date</div>
+                            <div class="swipeout-actions-right">
+                                <a href="#" class="action1 bg-red swipeout-close" v-on="click:alert($index)">Delete</a>
+                            </div>
+                         </li>
+                    </ul>
+                    <div v-show="!notes.length">No notes for selected date</div>
+                </div>
+            </div>
         </div>
     </div>
     `,

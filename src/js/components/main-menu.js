@@ -10,32 +10,7 @@ Vue.component('main-menu', {
         profiles:{
             type:Array,
             default:function(){
-                return[
-                    {
-                        id:0,
-                        img:'userpic.png',
-                        name:'Test Profile 1',
-                        active:false
-                    },
-                    {
-                        id:1,
-                        img:'userpic.png',
-                        name:'Test Prof 2',
-                        active:false
-                    },
-                    {
-                        id:2,
-                        img:'userpic.png',
-                        name:'Anna Sergeevna',
-                        active:true
-                    },
-                    {
-                        id:3,
-                        img:'userpic.png',
-                        name:'no name',
-                        active:false
-                    }
-                ];
+                return [];
             }
         },
         active:{
@@ -49,6 +24,11 @@ Vue.component('main-menu', {
         profilesListHeight:{
             type:Number,
             default:0
+        },
+
+        isOpen:{
+            type:Boolean,
+            default:false
         }
     },
 
@@ -75,6 +55,26 @@ Vue.component('main-menu', {
             this.active = index;
 
             app.profile.setActive(this.profiles[index].id);
+        },
+
+        open: function(){
+            app.f7.openPanel('left');
+            this.isOpen = true;
+            app.em.event('buttonAddHide');
+        },
+
+        close: function(){
+            app.f7.closePanel();
+            this.isOpen = false;
+            app.em.event('buttonAddShow');
+        },
+
+        toggle: function(){
+            if(this.isOpen){
+                this.close();
+            } else {
+                this.open();
+            }
         }
     },
 
@@ -85,6 +85,11 @@ Vue.component('main-menu', {
 
         app.dom7('.panel').css('display', 'block');
         setTimeout(this.updateProfilesListHeight, 500);
+
+        app.dom7('.panel-left').on('close', this.close);
+        app.dom7('.panel-left').on('open', this.open);
+
+
     },
 
     template:`
@@ -117,6 +122,9 @@ Vue.component('main-menu', {
                         <div class="profile-diet">My favorite diet</div>
                     </div>
                 </div>
+                <div>
+                    <a href="#profile" class="close-panel">Add new profile</a>
+                </div>
             </div>
 
         </div>
@@ -125,7 +133,7 @@ Vue.component('main-menu', {
     <div class="list-block menu-main" v-class="expanded : !profilesExpanded" >
                 <ul style="transform: translateY(-{{profilesListHeight}}px);" >
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#index" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Home</div>
                                 <div class="item-after"></div>
@@ -133,7 +141,7 @@ Vue.component('main-menu', {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#diary" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Diary</div>
                                 <div class="item-after"></div>
@@ -141,7 +149,7 @@ Vue.component('main-menu', {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Statistics</div>
                                 <div class="item-after"></div>
@@ -149,7 +157,7 @@ Vue.component('main-menu', {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Diets</div>
                                 <div class="item-after"></div>
@@ -157,7 +165,7 @@ Vue.component('main-menu', {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Products List</div>
                                 <div class="item-after"></div>
@@ -165,7 +173,7 @@ Vue.component('main-menu', {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Personal Data</div>
                                 <div class="item-after"></div>
@@ -173,7 +181,7 @@ Vue.component('main-menu', {
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="item-link item-content">
+                        <a href="#" class="item-link item-content close-panel">
                             <div class="item-inner">
                                 <div class="item-title">Settings</div>
                                 <div class="item-after"></div>

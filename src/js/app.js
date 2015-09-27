@@ -29,6 +29,9 @@ import './components/diary-view.js';
 import './components/diary-datepicker.js'
 import './components/charts-builder.js'
 import './components/main-menu.js'
+import './components/navbar-main.js'
+import './components/profile-new.js'
+import './components/page-index.js'
 
 
 
@@ -43,7 +46,8 @@ var app = {
     config: {
         f7_enable: true,
         f7_config: {
-            swipePanel:'left'
+            swipePanel:'left',
+            animatePages:true
         },
         dom7_enable: true,
         JSAPI_enable: true,
@@ -170,7 +174,8 @@ var app = {
         if (app.config.f7_enable) {
             app.f7 = new Framework7(app.config.f7_config);
             app.view = app.f7.addView('.view-main', {
-                dynamicNavbar: true
+                dynamicNavbar: true,
+                domCache:true
             });
         }
         if (app.config.dom7_enable) {

@@ -14,44 +14,25 @@
 <div class="loading-overlay"></div>
 <div class="statusbar-overlay"></div>
 
-<main-menu></main-menu>
+<main-menu v-ref="mainMenu"></main-menu>
 
 <div class="views">
     <div class="view view-main">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="left">
-                    <a href="#" class="open-panel" data-panel="panel-left">
-                        <i class="icon icon-menu"></i>
-                    </a>
-                </div>
-                <div class="center sliding">{{title}}</div>
-                <div class="right">
-                    <a href="#">
-                        <i class="icon icon-share"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="pages">
-            <div data-page="index" class="page no-swipeback">
-                <div class="page-content">
-                    <div class="goal">
-                        <goal-view v-ref="goal" testattr="test"></goal-view>
-                    </div>
-                    <a href="diary.html">Diary</a>
-                    <charts-builder id="indexChart"></charts-builder>
-                    <diary-eat-next v-ref="eatNext"></diary-eat-next>
-                </div>
-            </div>
+        <navbar-main v-ref="navbar"></navbar-main>
+        <div class="pages navbar-through">
+            <page-index v-ref="pageIndex"></page-index>
+            <diary-view v-ref="diaryView"></diary-view>
+            <profile-new v-ref="pageProfile"></profile-new>
         </div>
     </div>
 </div>
 
+
+
 <diary-datepicker v-ref="datepicker"></diary-datepicker>
 
 <div id="button-note">
-    <button-note></button-note>
+    <button-note v-ref="buttonNote"></button-note>
 </div>
 
 <script src="js/vue.js"></script>

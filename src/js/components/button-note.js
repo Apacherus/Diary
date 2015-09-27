@@ -7,13 +7,19 @@ button = Vue.component('button-note', {
         isClosed: {
             type: Boolean,
             default: true
+        },
+
+        isHidden: {
+            type:Boolean,
+            default:false
         }
     },
     template: `
     <div class="button-note"
     v-on="click: buttonClick(null, $event)"
-    v-class="closed: isClosed"
+    v-class="closed: isClosed, hidden : isHidden"
     on-load="onLoad"
+    v-el="buttonNote"
     >
     <button-note-round></button-note-round>
     <ul>
@@ -67,6 +73,18 @@ button = Vue.component('button-note', {
             }
 
 
+        },
+
+        hide: function(){
+            this.isHidden = true;
+        },
+
+        show: function(){
+            this.isHidden = false;
+        },
+
+        toggleShow: function(){
+            this.isHidden = !this.isHidden;
         }
     },
 
@@ -89,6 +107,9 @@ button = Vue.component('button-note', {
         setTimeout(function () {
             app.dom7('.button-note li').css('opacity', '1');
         }, 700);
+
+        app.em.listen('buttonAddHide', this.hide);
+        app.em.listen('buttonAddShow', this.show);
     }
 });
 

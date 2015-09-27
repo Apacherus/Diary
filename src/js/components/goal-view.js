@@ -103,7 +103,11 @@ var goalView = Vue.component('goal-view', {
             var weightLeft = this.weight - this.goalWeight;//сколько кг до цели
 
             //Math.round10 - MDN function
-            this.goalWeightDiff = - Math.round10(weightLeft / daysLeft, -2) || 0;
+            if(!this.goalWeight){
+                this.goalWeightDiff = 0;
+            } else {
+                this.goalWeightDiff = - Math.round10(weightLeft / daysLeft, -2) || 0;
+            }
         },
         storeDataGet: function(){
             this.goalWeight = app.profile.db.goal.weight || 0;

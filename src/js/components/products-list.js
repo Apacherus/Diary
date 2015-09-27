@@ -49,13 +49,23 @@ Vue.component('products-list', {
             </div>
         </div>
     </div>
-    <div class="content-block products-list" v-show="!showCount">
+    <div class="list-block accordion-list products-list" v-show="!showCount">
         <ul>
-            <li v-repeat="cats">
-                <a href="#" v-on="click: show = !show">{{title}}</a>
-                <ul v-show="show">
-                    <li class="product" v-repeat="products" v-on="click: openCount(products[$index], id)">{{title}}</li>
-                </ul>
+            <li class="accordion-item" v-repeat="cats">
+                <a href="" class="item-link item-content accordion-item-toggle">
+                <div class="item-inner">
+                    <div class="item-title">{{title}}</div>
+                </div>
+                </a>
+                <div class="list-block accordion-item-content">
+                    <ul>
+                        <li class="product item-content" v-repeat="products" v-on="click: openCount(products[$index], id)">
+                        <div class="item-inner">
+                            {{title}}
+                        </div>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

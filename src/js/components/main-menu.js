@@ -29,6 +29,11 @@ Vue.component('main-menu', {
         isOpen:{
             type:Boolean,
             default:false
+        },
+
+        disableAddButtonShow: {
+            type:Boolean,
+            default:false
         }
     },
 
@@ -44,7 +49,7 @@ Vue.component('main-menu', {
 
         updateProfilesListHeight: function(){
             this.profilesListHeight = this.$$.profilesList.offsetHeight+3;
-            app.dom7('.panel').css('display', 'none');
+            if(!this.isOpen) app.dom7('.panel').css('display', 'none');
         },
 
         profileSelect: function(index){
@@ -57,6 +62,14 @@ Vue.component('main-menu', {
             app.profile.setActive(this.profiles[index].id);
         },
 
+        updateProfileInfo: function(){
+            this.active = app.profile.getActive();
+            this.profiles = app.profile.getAll();
+
+            if(!this.isOpen) app.dom7('.panel').css('display', 'block');
+            setTimeout(this.updateProfilesListHeight, 500);
+        },
+
         open: function(){
             app.f7.openPanel('left');
             this.isOpen = true;
@@ -66,7 +79,14 @@ Vue.component('main-menu', {
         close: function(){
             app.f7.closePanel();
             this.isOpen = false;
-            app.em.event('buttonAddShow');
+            if(!this.disableAddButtonShow) {
+                app.em.event('buttonAddShow');
+            } else {
+                this.disableAddButtonShow = false;
+            }
+            if(this.profilesExpanded){
+                this.expandProfiles();
+            }
         },
 
         toggle: function(){
@@ -75,20 +95,21 @@ Vue.component('main-menu', {
             } else {
                 this.open();
             }
+        },
+
+        newProfile(){
+            this.disableAddButtonShow = true;
+            app.vue.$.pageProfile.newProfile();
         }
     },
 
     ready:function(){
 
-        this.active = app.profile.getActive();
-        this.profiles = app.profile.getAll();
-
-        app.dom7('.panel').css('display', 'block');
-        setTimeout(this.updateProfilesListHeight, 500);
-
+        this.updateProfileInfo();
         app.dom7('.panel-left').on('close', this.close);
         app.dom7('.panel-left').on('open', this.open);
 
+        app.em.listen('appProfileSaved', this.updateProfileInfo);
 
     },
 
@@ -123,7 +144,7 @@ Vue.component('main-menu', {
                     </div>
                 </div>
                 <div>
-                    <a href="#profile" class="close-panel">Add new profile</a>
+                    <a href="#" class="close-panel" v-on="click:newProfile()">Add new profile</a>
                 </div>
             </div>
 

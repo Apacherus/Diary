@@ -8,8 +8,8 @@ export default class Goal {
 
     constructor(days = 0, weight = 0, startWeight = 0){
 
-        if(days > 90) {
-            days = 90;
+        if(days > 2000) {
+            days = 2000;
         }
 
         startWeight = app.notes.last('measure');

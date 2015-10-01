@@ -31,6 +31,12 @@ Vue.filter('time', function(val){
     }
 });
 
+Vue.filter('birthday', function(date = app.moment){
+    if(date) {
+        return app.moment(date).format('L');
+    }
+});
+
 /**
  * @date {Date}
  */

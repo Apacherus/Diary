@@ -325,19 +325,28 @@ var app = {
 
        // var goal = new Goal(10, 80).save();
 
+        if(app.profile.db.firstRun){
+            app.dom7('body').append('<div class="first-run__overlay"></div>');
+
+        }
+
         app.vue = new Vue({
             el: 'body',
             data:{
                 title:'Calorie Diary'
             }
         });
+
+        if(app.profile.db.firstRun){
+            app.vue.$.navbar.loadPage('profile');
+        }
     },
 
     pageIndexReinit: function (page) {
     },
 
     pageInitDiary: function(){
-        app.diary = new Vue({
+       /* app.diary = new Vue({
             data:{
                 date:'123',
                 title:''
@@ -348,7 +357,7 @@ var app = {
                     this.$.diaryView.openDatePicker();
                 }
             }
-        });
+        });*/
     },
 
     loadingStart: function () {

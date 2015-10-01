@@ -27,8 +27,32 @@ var _profile = {
             _db.settings = {};
         }
 
+        if(!("firstRun" in _db)){
+            _db.firstRun = true;
+        }
+
         if(!_db.notes) {
             _db.notes = [];
+        }
+
+        if(!_db.birthday){
+            _db.birthday = new Date;
+        }
+
+        if(!_db.sex){
+            _db.sex = 'F';
+        }
+
+        if(!_db.height){
+            _db.height = 0;
+        }
+
+        if(!_db.bodyType){
+            _db.bodyType = 0;
+        }
+
+        if(!_db.activityType){
+            _db.activityType = 0;
         }
 
         if(!_db.lastMeasure){
@@ -86,6 +110,8 @@ var _profile = {
         if("currentProfile" in dbActual && dbActual.currentProfile != _db.id){
             dbActual.currentProfile = _db.id;
             storage.setDB(dbActual);
+        } else {
+            dbActual.currentProfile = _db.id;
         }
 
         dbPath = "dbProfile_"+_db.id;
@@ -97,6 +123,8 @@ var _profile = {
 
 
         db = dbActual;
+
+        storage.setDB(db);
 
         return _db;
     },
@@ -114,6 +142,7 @@ var _profile = {
     },
     save: function(){
         storage.setDB(this.db || {}, dbPath);
+        app.em.event('appProfileSaved');
     },
     remove: function(id = null){
         if(id === null){
@@ -154,16 +183,18 @@ var _profile = {
     getAll: function(){
         var profiles = [];
         var current = this.getActive();
-        for(var i = 0; i < db.profiles.length; i++){
-            profiles[i] = this.create(storage.getDB("dbProfile_"+db.profiles[i]), true);
-            if(!("id" in profiles[i])){
-                profiles[i].id = -1;
-            }
-            if(!("active" in profiles[i])){
-                profiles[i].active = false;
-            }
-            if(profiles[i].id == current){
-                profiles[i].active = true;
+        if(db.profiles){
+            for(var i = 0; i < db.profiles.length; i++){
+                profiles[i] = this.create(storage.getDB("dbProfile_"+db.profiles[i]), true);
+                if(!("id" in profiles[i])){
+                    profiles[i].id = -1;
+                }
+                if(!("active" in profiles[i])){
+                    profiles[i].active = false;
+                }
+                if(profiles[i].id == current){
+                    profiles[i].active = true;
+                }
             }
         }
         return profiles;
@@ -177,7 +208,10 @@ var _profile = {
         db = storage.getDB();
         db.currentProfile = id;
         storage.setDB(db);
+        this.load(id);
+        app.notes.Load();
         app.em.event('profileActiveChanged');
+        app.em.event('notesStoreChanged');
     }
 };
 

@@ -11,7 +11,7 @@ Vue.component('navbar-main', {
                 return{
                     index:'',
                     diary:'Diary',
-                    profile:'Profile'
+                    profile:''
                 };
             }
         }
@@ -48,14 +48,14 @@ Vue.component('navbar-main', {
 
         <div class="navbar-inner cached" data-page="profile" v-el="profile">
             <div class="left">
-                <a href="#" v-on="click : loadPage('index')">
+                <a href="#" v-on="click : loadPage('index')" class="navbar-profile__icon_back">
                     <i class="icon icon-back"></i>
                 </a>
             </div>
             <div class="center sliding">{{title.profile}}</div>
             <div class="right">
-                <a href="#">
-                    <i class="icon icon-calendar"></i>
+                <a href="#" class="navbar-profile__icon_skip hidden">
+                    Skip all <i class="icon icon__arrow_right"></i>
                 </a>
             </div>
         </div>

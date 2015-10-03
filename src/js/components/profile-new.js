@@ -362,7 +362,6 @@ Vue.component('profile-new', {
             if(app.profile.db.firstRun) {
                 app.dom7('[data-page="profile"] .swiper-wrapper').prepend(self.swiperFirstRunSlide);
                 app.dom7('.navbar-profile__icon_back').addClass('hidden');
-                //app.dom7('.navbar-profile__icon_skip').removeClass('hidden');
                 app.dom7('.navbar-profile__icon_skip').click(function(){
                     self.skip();
                 });

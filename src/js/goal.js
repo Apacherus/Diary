@@ -12,7 +12,7 @@ export default class Goal {
             days = 2000;
         }
 
-        startWeight = app.notes.last('measure');
+        startWeight = app.notes.last('measure')||[];
         startWeight = "weight" in startWeight?startWeight.weight:0;
 
         this.goal =  {
